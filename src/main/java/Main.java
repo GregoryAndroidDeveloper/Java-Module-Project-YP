@@ -6,25 +6,42 @@ public class Main {
         Race race = new Race();
 
         for (int i = 1; i <= 3; i++) {
-            System.out.println("Введите название автомобиля под номером " + i + ":");
-            String name = scanner.next();
 
-            int speed;
+            String name;
 
             while (true) {
-                System.out.println("Введите скорость автомобиля под номером " + i + ":");
-                speed = scanner.nextInt();
+                System.out.println("Введите название автомобиля под номером " + i + ":");
+                name = scanner.nextLine().trim();
 
-                if (speed > 0 && speed <= 250) {
+                if (!name.isEmpty()) {
                     break;
-                } else {
-                    System.out.println("Неверная скорость. Попробуйте еще раз");
                 }
+
+                System.out.println("Название не может быть пустым");
             }
 
-            Car car = new Car(name, speed);
-            race.defineLeader(car);
+                int speed;
+
+                while (true) {
+                    System.out.println("Введите скорость автомобиля под номером " + i + ":");
+
+                    if (scanner.hasNextInt()) {
+                        speed = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (speed > 0 && speed <= 250) {
+                            break;
+                        } else {
+                            System.out.println("Неверная скорость. Скорость должна быть от 1 до 250");
+                        }
+                    } else {
+                        System.out.println("Ошибка. Нужно ввести целое число");
+                        scanner.next();
+                    }
+                }
+                Car car = new Car(name, speed);
+                race.defineLeader(car);
+            }
+            System.out.println("Победитель гонки: " + race.leader + "!");
         }
-        System.out.println("Победитель гонки: " + race.leader + "!");
     }
-}
